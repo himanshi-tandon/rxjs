@@ -4,7 +4,7 @@ RxJS is a library for reactive programming using Observables, to make it easier 
 ### RXJS that you should know before Angular
 <a href="#observables-observer--subcription">Observables, Observer & Subcription</a>
 
-#### Subjects
+#### <a href="#subjects-1">Subjects</a>
 <ol>
   <li><a href="#1-subject">Subject</a></li>
   <li><a href="#2-behaviorsubject">BehaviorSubject</a></li>
