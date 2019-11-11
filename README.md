@@ -21,8 +21,8 @@ RxJS is a library for reactive programming using Observables, to make it easier 
   <li><a href="javascript:;">mergeMap</a></li>
   <li><a href="javascript:;">switchMap</a></li>
   <li><a href="javascript:;">flatMap</a></li>
+  <li><a href="#10-reduce">reduce</a></li>
   <li><a href="javascript:;">scan</a></li>
-  <li><a href="javascript:;">reduce</a></li>
   <li><a href="javascript:;">pluck</a></li>
   <li><a href="javascript:;">Filter</a></li>
   <li><a href="javascript:;">zip</a></li>
