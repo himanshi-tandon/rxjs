@@ -7,8 +7,8 @@ RxJS is a library for reactive programming using Observables, to make it easier 
 #### Subjects
 <ol>
   <li><a href="#1-subject">Subject</a></li>
-  <li><a href="#2-behaviorsubject">AsyncSubject</a></li>
-  <li><a href="#3-asyncsubject">BehaviorSubject</a></li>
+  <li><a href="#2-behaviorsubject">BehaviorSubject</a></li>
+  <li><a href="#3-asyncsubject">AsyncSubject</a></li>
   <li><a href="#4-replaysubject">ReplaySubject</a></li>
 </ol>
 
@@ -202,8 +202,8 @@ Reference: https://rxjs-dev.firebaseapp.com/guide/subject
 **Types of subjects**
 <ol>
   <li><a href="#1-subject">Subject</a></li>
-  <li><a href="#2-behaviorsubject">AsyncSubject</a></li>
-  <li><a href="#3-asyncsubject">BehaviorSubject</a></li>
+  <li><a href="#2-behaviorsubject">BehaviorSubject</a></li>
+  <li><a href="#3-asyncsubject">AsyncSubject</a></li>
   <li><a href="#4-replaysubject">ReplaySubject</a></li>
 </ol>
 
