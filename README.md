@@ -39,13 +39,18 @@ RxJS is a library for reactive programming using Observables, to make it easier 
 **Observable**
 - An Observable is what we can use to listen, aka subscribe, to new changes that are emitted by an Observer. Think of this as a "Read-only" assembly line (you can only observe when new cars come off the assembly line).
 
-**Subject**
-- A Subject is simply an Observer and Observable. You can push new values as well as subscribe to it. Think of this as a "Read & Write" assembly line (you can both add cars onto the assembly line and observe cars that come off the assembly line).
-
 **Operators**
 - The purpose of Operators in RxJS are the same as most operators in other programming languages/libraries: they allow you to perform operations on your code.
 - In RxJS, you can think of Operators as a way to manipulate the data coming from a Subject (or Observer) before it's sent to an Observable. This is the equivalent of instructing an assembly line to modify the car in a certain way (i.e. paint it black, shine it, etc) and then return it to the next assembly line.
 
+The essential concepts in RxJS which solve async event management are:
+
+- **Observable**: represents the idea of an invokable collection of future values or events.
+- **Observer**: is a collection of callbacks that knows how to listen to values delivered by the Observable.
+- **Subscription**: represents the execution of an Observable, is primarily useful for cancelling the execution.
+- **Operators**: are pure functions that enable a functional programming style of dealing with collections with operations like map, filter, concat, reduce, etc.
+- **Subject**: is the equivalent to an EventEmitter, and the only way of multicasting a value or event to multiple Observers.
+- **Schedulers**: are centralized dispatchers to control concurrency, allowing us to coordinate when computation happens on e.g. setTimeout or requestAnimationFrame or others.
 
 **Promise vs Observable**
 
@@ -186,6 +191,169 @@ import { from } from 'rxjs';
 const promiseSource = from(new Promise(resolve => resolve('Hello World!')));
 //output: 'Hello World'
 const subscribe = promiseSource.subscribe(val => console.log(val));
+```
+
+### Subjects
+Reference: https://rxjs-dev.firebaseapp.com/guide/subject
+- A Subject is simply an Observer and Observable. You can push new values as well as subscribe to it. Think of this as a "Read & Write" assembly line (you can both add cars onto the assembly line and observe cars that come off the assembly line).
+- What is a Subject? An RxJS Subject is a special type of Observable that allows values to be multicasted to many Observers. While plain Observables are unicast (each subscribed Observer owns an independent execution of the Observable), Subjects are multicast.
+- Subject is the equivalent to an EventEmitter, and the only way of multicasting a value or event to multiple Observers.
+
+**Types of subjects**
+<ol>
+  <li><a href="javascript:;">Subject</a></li>
+  <li><a href="javascript:;">BehaviorSubject</a></li>
+  <li><a href="javascript:;">AsyncSubject</a></li>
+  <li><a href="javascript:;">ReplaySubject</a></li>
+</ol>
+
+#### 1. Subject
+
+```javascript
+import { Subject } from 'rxjs';
+ 
+const subject = new Subject<number>();
+ 
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`)
+});
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`)
+});
+ 
+subject.next(1);
+subject.next(2);
+ 
+// Logs:
+// observerA: 1
+// observerB: 1
+// observerA: 2
+// observerB: 2
+```
+
+Since a Subject is an Observer, this also means you may provide a Subject as the argument to the subscribe of any Observable, like the example below shows:
+
+```javascript
+import { Subject, from } from 'rxjs';
+ 
+const subject = new Subject<number>();
+ 
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`)
+});
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`)
+});
+ 
+const observable = from([1, 2, 3]);
+ 
+observable.subscribe(subject); // You can subscribe providing a Subject
+ 
+// Logs:
+// observerA: 1
+// observerB: 1
+// observerA: 2
+// observerB: 2
+// observerA: 3
+// observerB: 3
+```
+
+#### 2. BehaviorSubject
+- One of the variants of Subjects is the BehaviorSubject, which has a notion of "the current value". It stores the latest value emitted to its consumers, and whenever a new Observer subscribes, it will immediately receive the "current value" from the BehaviorSubject.
+- BehaviorSubjects are useful for representing "values over time". For instance, an event stream of birthdays is a Subject, but the stream of a person's age would be a BehaviorSubject.
+
+In the following example, the BehaviorSubject is initialized with the value 0 which the first Observer receives when it subscribes. The second Observer receives the value 2 even though it subscribed after the value 2 was sent.
+```javascript
+import { BehaviorSubject } from 'rxjs';
+const subject = new BehaviorSubject(0); // 0 is the initial value
+ 
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`)
+});
+ 
+subject.next(1);
+subject.next(2);
+ 
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`)
+});
+ 
+subject.next(3);
+ 
+// Logs
+// observerA: 0
+// observerA: 1
+// observerA: 2
+// observerB: 2
+// observerA: 3
+// observerB: 3
+```
+
+#### 3. AsyncSubject
+The AsyncSubject is a variant where only the last value of the Observable execution is sent to its observers, and only when the execution completes.
+
+```javascript
+import { AsyncSubject } from 'rxjs';
+const subject = new AsyncSubject();
+ 
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`)
+});
+ 
+subject.next(1);
+subject.next(2);
+subject.next(3);
+subject.next(4);
+ 
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`)
+});
+ 
+subject.next(5);
+subject.complete();
+ 
+// Logs:
+// observerA: 5
+// observerB: 5
+```
+
+**Note:** The AsyncSubject is similar to the last() operator, in that it waits for the complete notification in order to deliver a single value.
+
+#### 4. ReplaySubject
+- A ReplaySubject is similar to a BehaviorSubject in that it can send old values to new subscribers, but it can also record a part of the Observable execution.
+- A ReplaySubject records multiple values from the Observable execution and replays them to new subscribers.
+
+When creating a ReplaySubject, you can specify how many values to replay:
+
+```javascript
+import { ReplaySubject } from 'rxjs';
+const subject = new ReplaySubject(3); // buffer 3 values for new subscribers
+ 
+subject.subscribe({
+  next: (v) => console.log(`observerA: ${v}`)
+});
+ 
+subject.next(1);
+subject.next(2);
+subject.next(3);
+subject.next(4);
+ 
+subject.subscribe({
+  next: (v) => console.log(`observerB: ${v}`)
+});
+ 
+subject.next(5);
+ 
+// Logs:
+// observerA: 1
+// observerA: 2
+// observerA: 3
+// observerA: 4
+// observerB: 2
+// observerB: 3
+// observerB: 4
+// observerA: 5
+// observerB: 5
 ```
 
 ##### References
