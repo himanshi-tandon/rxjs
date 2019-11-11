@@ -30,7 +30,7 @@ RxJS is a library for reactive programming using Observables, to make it easier 
   <li><a href="javascript:;">tap</a></li>
 </ol>
 
-#### Observables, Observer & Subcription
+### Observables, Observer & Subcription
 
 **Observer**
 - You usually won't interact with the Observer object directly, as you'll likely interact with a Subject instead (which we cover below), but it's important to know what it does.
