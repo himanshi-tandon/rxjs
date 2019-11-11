@@ -355,6 +355,25 @@ subject.next(5);
 // observerB: 5
 ```
 
+### Operators
+
+#### 10. reduce
+- Just like Array.prototype.reduce()
+- If you need the current accumulated value on each emission, try scan!
+
+**EXAMPLE 1:** SUM A STREAM OF NUMBERS
+
+```javascript
+// RxJS v6+
+import { of } from 'rxjs';
+import { reduce } from 'rxjs/operators';
+
+const source = of(1, 2, 3, 4);
+const example = source.pipe(reduce((acc, val) => acc + val));
+//output: Sum: 10'
+const subscribe = example.subscribe(val => console.log('Sum:', val));
+```
+
 ##### References
 - https://rxjs-dev.firebaseapp.com/guide/overview
 - https://www.learnrxjs.io
