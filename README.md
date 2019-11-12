@@ -40,7 +40,7 @@ RxJS is a library for reactive programming using Observables, to make it easier 
 
 **Operators**
 - The purpose of Operators in RxJS are the same as most operators in other programming languages/libraries: they allow you to perform operations on your code.
-- In RxJS, you can think of Operators as a way to manipulate the data coming from a Subject (or Observer) before it's sent to an Observable. This is the equivalent of instructing an assembly line to modify the car in a certain way (i.e. paint it black, shine it, etc) and then return it to the next assembly line.
+- In <a href="/suryansh54/rxjs">RxJS</a>, you can think of Operators as a way to manipulate the data coming from a Subject (or Observer) before it's sent to an Observable. This is the equivalent of instructing an assembly line to modify the car in a certain way (i.e. paint it black, shine it, etc) and then return it to the next assembly line.
 
 The essential concepts in RxJS which solve async event management are:
 
