@@ -356,8 +356,66 @@ subject.next(5);
 ```
 
 ### Operators
+#### 1. of
+- Converts the arguments to an observable sequence.
+- Emit variable amount of values in a sequence and then emits a complete notification.
 
-#### 10. reduce
+**EXAMPLE 1:** EMITTING A SEQUENCE OF NUMBERS
+```javascript
+// RxJS v6+
+import { of } from 'rxjs';
+//emits any number of provided values in sequence
+const source = of(1, 2, 3, 4, 5);
+//output: 1,2,3,4,5
+const subscribe = source.subscribe(val => console.log(val));
+```
+
+**EXAMPLE 2:** EMITTING AN OBJECT, ARRAY, AND FUNCTION
+```javascript
+// RxJS v6+
+import { of } from 'rxjs';
+//emits values of any type
+const source = of({ name: 'Brian' }, [1, 2, 3], function hello() {
+  return 'Hello';
+});
+//output: {name: 'Brian'}, [1,2,3], function hello() { return 'Hello' }
+const subscribe = source.subscribe(val => console.log(val));
+```
+
+#### 2. from
+- Creates an Observable from an Array, an array-like object, a Promise, an iterable object, or an Observable-like object.
+- Converts almost anything to an Observable.
+
+```javascript
+import { from } from 'rxjs';
+
+const array = [10, 20, 30];
+const result = from(array);
+
+result.subscribe(x => console.log(x));
+
+// Logs:
+// 10
+// 20
+// 30
+```
+
+#### 4. map
+Like Array.prototype.map(), it passes each source value through a transformation function to get corresponding output values.
+
+```javascript
+import { from } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+//emit (1,2,3,4,5)
+const source = from([1, 2, 3, 4, 5]);
+//add 10 to each value
+const example = source.pipe(map(val => val + 10));
+//output: 11,12,13,14,15
+const subscribe = example.subscribe(val => console.log(val));
+```
+
+#### 9. reduce
 - Just like Array.prototype.reduce()
 - If you need the current accumulated value on each emission, try scan!
 
