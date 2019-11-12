@@ -13,15 +13,15 @@ RxJS is a library for reactive programming using Observables, to make it easier 
 
 #### Operators
 <ol>
-  <li><a href="javascript:;">of</a></li>
-  <li><a href="javascript:;">from</a></li>
+  <li><a href="#1-of">of</a></li>
+  <li><a href="#2-from">from</a></li>
   <li><a href="javascript:;">Pipe</a></li>
-  <li><a href="javascript:;">map</a></li>
+  <li><a href="#4-map">map</a></li>
   <li><a href="javascript:;">mapto</a></li>
   <li><a href="javascript:;">mergeMap</a></li>
   <li><a href="javascript:;">switchMap</a></li>
   <li><a href="javascript:;">flatMap</a></li>
-  <li><a href="#10-reduce">reduce</a></li>
+  <li><a href="#9-reduce">reduce</a></li>
   <li><a href="javascript:;">scan</a></li>
   <li><a href="javascript:;">pluck</a></li>
   <li><a href="javascript:;">Filter</a></li>
