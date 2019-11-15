@@ -34,9 +34,16 @@ RxJS is a library for reactive programming using Observables, to make it easier 
 **Observer**
 - You usually won't interact with the Observer object directly, as you'll likely interact with a Subject instead (which we cover below), but it's important to know what it does.
 - Observers allow you to "push" new data into an observable sequence. You can think of this as a "Write-only" way of modifying observable sequences (to go back to our analogy of assembly lines, observers can only add new cars onto an assembly line).
+<img src="assets/Observer.PNG" width="800">
 
 **Observable**
 - An Observable is what we can use to listen, aka subscribe, to new changes that are emitted by an Observer. Think of this as a "Read-only" assembly line (you can only observe when new cars come off the assembly line).
+<img src="assets/Observable.PNG" width="800">
+
+**Subcription**
+- An Observable instance begins publishing values only when someone subscribes to it. You subscribe by calling the subscribe() method of the instance, passing an observer object to receive the notifications.
+- A Subscription has one important method, unsubscribe(), that takes no argument and just disposes of the resource held by the subscription.
+<img src="assets/subcription.PNG" width="800">
 
 **Operators**
 - The purpose of Operators in RxJS are the same as most operators in other programming languages/libraries: they allow you to perform operations on your code.
