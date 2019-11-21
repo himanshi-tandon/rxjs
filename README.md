@@ -88,6 +88,63 @@ Observable provides the map, forEach, Filter, reduce, retry, retryWhen Operators
 
 
 #### 1. Creating observable 
+You can create Observable by 3 ways
+- 1A. Observable.create()
+- 1B. **of** and **from** Operators
+- 1C. fromEvent
+
+
+### 1A. Observable.create()
+```javascript
+// RxJS v6+
+import { Observable } from 'rxjs';
+/*
+  Create an observable that emits 'Hello' and 'World' on  
+  subscription.
+*/
+const hello = Observable.create(function(observer) {
+  observer.next('Hello');
+  observer.next('World');
+  observer.complete();
+});
+
+//output: 'Hello'...'World'
+const subscribe = hello.subscribe(val => console.log(val));
+```
+
+### 1B. **of** and **from** Operators
+```javascript
+// RxJS v6+
+import { of } from 'rxjs';
+//emits any number of provided values in sequence
+const source = of(1, 2, 3, 4, 5);
+//output: 1,2,3,4,5
+const subscribe = source.subscribe(val => console.log(val));
+```
+
+```javascript
+// RxJS v6+
+import { from } from 'rxjs';
+
+//emit array as a sequence of values
+const arraySource = from([1, 2, 3, 4, 5]);
+//output: 1,2,3,4,5
+const subscribe = arraySource.subscribe(val => console.log(val));
+```
+
+### 1C. fromEvent
+```javascript
+// RxJS v6+
+import { fromEvent } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+//create observable that emits click events
+const source = fromEvent(document, 'click');
+//map to string with given event timestamp
+const example = source.pipe(map(event => `Event time: ${event.timeStamp}`));
+//output (example): 'Event time: 7276.390000000001'
+const subscribe = example.subscribe(val => console.log(val));
+```
 Here's an example that demonstrates the basic usage model by showing how an observable could be used to provide geolocation updates.
 ```javascript
 // Create an Observable that will start listening to geolocation updates
